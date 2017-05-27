@@ -1,5 +1,7 @@
 from tkinter import *
 from tkinter import ttk
+import pickle
+import random
 
 #-----------------------------Configuração da janela---------------------------#
 #definição da classes
@@ -33,6 +35,20 @@ def jogo():
 
 def NovoJogo():
     def jogo():
+        inputFile = open("palavras.pkl",'rb')
+        if(dificuldade == "Fácil"):
+            palavras1 = pickle.load(inputFile)
+            palavra = palavras1[random.randint(0,4)]
+        if(dificuldade == "Médio"):
+            palavras2 = pickle.load(inputFile)
+            palavra = palavras2[random.randint(0,4)]
+        if(dificuldade == "Difícil"):
+            palavras3 = pickle.load(inputFile)
+            palavra = palavras3[random.randint(0,4)]
+
+        
+        
+        
         def letraA():
             print("X")
         def letraB():
@@ -129,6 +145,8 @@ def NovoJogo():
         contBai20.pack(side="bottom")
         contEsq20 = Frame(height=500,width=400)
         contEsq20.pack(side="left")
+        contDir20 = Frame(height=100,width=400,bg="red")
+        contDir20.pack(side="bottom")
         #botões
         A = Button(contBai20,text="A",command=letraA)
         A.pack(side="left")
@@ -211,6 +229,7 @@ def NovoJogo():
         label20 = Label(contEsq20, image=forca)
         label20.pack(side="left")
         
+        
     
     #Limpeza da tela
     contTop.destroy()
@@ -260,6 +279,7 @@ def NovoJogo():
     Iniciar11.pack()
     esp13.pack()
     nome = jogador1.get()
+    dificuldade = lista.get()
 
     
     
