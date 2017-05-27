@@ -20,17 +20,7 @@ myapp.master.minsize(800,600)
 
 
 #----------------------------------Submenus------------------------------------#
-def jogo():
-    #Limpeza da tela
-    contTop1.destroy()
-    bordEsq1.destroy()
-    Menu1.destroy()
-    bordDir1.destroy()
-    esp10.destroy()
-    esp11.destroy()
-    esp12.destroy()
-    esp13.destroy()
-    
+
 
 
 def NovoJogo():
@@ -145,8 +135,12 @@ def NovoJogo():
         contBai20.pack(side="bottom")
         contEsq20 = Frame(height=500,width=400)
         contEsq20.pack(side="left")
-        contDir20 = Frame(height=100,width=400,bg="red")
+        contDir20 = Frame(height=100,width=400)
         contDir20.pack(side="bottom")
+        #Traços
+        for i in range(len(palavra)):
+            quantostracos += 1
+        tracos = Label(text)
         #botões
         A = Button(contBai20,text="A",command=letraA)
         A.pack(side="left")
