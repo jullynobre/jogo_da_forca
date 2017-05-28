@@ -44,6 +44,10 @@ class App:
             lbl_nome_jogador.pack(pady=20)
 
             def iniciar():
+                difi = lista.get()
+                nome2 = nome_jogador.get()
+
+                
                 frame_iniciar_jogo.destroy()
                 frame_jogo_left = Frame(root, style='Container.TFrame')
                 frame_jogo_left.place(height=400, width=335, x=50, y=150)
@@ -59,14 +63,29 @@ class App:
                 if (difi == "Fácil"):
                     palavras1 = pickle.load(inputFile)
                     palavra = palavras1[random.randint(0,4)]
+                    pontos = 1000
+                    dPontos = 20
                 elif (difi == "Médio"):
                     palavras2 = pickle.load(inputFile)
                     palavra = palavras2[random.randint(0,4)]
+                    pontos = 2000
+                    dPontos = 50
                 elif (difi == "Difícil"):
                     palavras3 = pickle.load(inputFile)
                     palavra = palavras3[random.randint(0, 4)]
+                    pontos = 3000
+                    dPontos = 100
 
-                palavra = "cassaco"
+                erros = 0
+                output = open("save.pkl",'wb')
+
+                pickle.dump(difi, output)
+                pickle.dump(nome2, output)
+                pickle.dump(pontos, output)
+                pickle.dump(dPontos, output)
+                pickle.dump(erros, output)
+
+                output.close()
 
                 #gerador do label que vai representar a palavra
                 tracosX = "_"
@@ -96,10 +115,30 @@ class App:
                     array_buttons[index].state(["disabled"])
 
                     palavra_auxiliar = list(palavra)
-                    print(palavra)
                     if palavra.count(letra) == 0:
-                        x = 1
-                        print("if")
+                        inputFile = open("save.pkl", 'rb')
+                        
+                        pontos = pickle.load(inputFile)
+                        dPontos = pickle.load(inputFile)
+                        erros = pickle.load(inputFile)
+                        
+                        inputFile.close()
+
+                        
+                        pontos -= dPontos
+
+
+                        if(erros == 6):
+                            print(1)
+
+
+                        output = open("save.pkl",'wb')
+                        
+                        pickle.dump(erros, output)
+                        pickle.dump(pontos, output)
+
+                        output.close()
+                        
                     else:
                         while palavra_auxiliar.count(letra) > 0:
                             index = palavra_auxiliar.index(letra)
@@ -173,7 +212,6 @@ class App:
             nome_jogador = Entry(frame_iniciar_jogo, style='D.TEntry', font=("", 15), width=30,
                                  textvariable=nome)
             nome_jogador.pack()
-
             lbl_dificuldade = Label(frame_iniciar_jogo, text="Dificuldade: ", style='D.TLabel')
             lbl_dificuldade.pack(pady=20)
 
@@ -181,7 +219,6 @@ class App:
             lista.set("Fácil")
             dificuldade = OptionMenu(frame_iniciar_jogo, lista, "Fácil", "Fácil", "Médio", "Difícil", style='D.TLabel')
             dificuldade.pack()
-            difi = lista.get()
 
             def voltar():
                 root.destroy()
