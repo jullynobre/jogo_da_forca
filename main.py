@@ -265,7 +265,7 @@ class App:
                                 App(newroot)
                                 newroot.mainloop()
 
-                            voltar = Button(frame_iniciar_jogo, text="Voltar", style='MenuButtons.TButton',
+                            voltar = Button(frame_congra, text="Voltar", style='MenuButtons.TButton',
                                             command=voltar)
                             voltar.pack()
 
