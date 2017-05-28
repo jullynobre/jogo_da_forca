@@ -148,24 +148,39 @@ class App:
                                     if(pontos - pon[2] > 0):
                                         if(pontos - pon[1] > 0):
                                             if(pontos - pon[0] > 0):
-                                                pon[4] = pon[4]
-                                                pon[3] = pon[3]
-                                                pon[2] = pon[2]
+                                                jog[4] = jog[3]
+                                                pon[4] = pon[3]
+                                                jog[3] = jog[2]
+                                                pon[3] = pon[2]
+                                                jog[2] = jog[1]
+                                                pon[2] = pon[1]
+                                                jog[1] = jog[0]
                                                 pon[1] = pon[0]
+                                                jog[0] = nome2
                                                 pon[0] = pontos
                                             else:
+                                                jog[5] = jog[4]
                                                 pon[5] = pon[4]
+                                                jog[4] = jog[3]
                                                 pon[4] = pon[3]
+                                                jog[3] = jog[2]
                                                 pon[3] = pon[2]
+                                                jog[2] = nome2
                                                 pon[2] = pontos
                                         else:
+                                            jog[4] = jog[3]
                                             pon[4] = pon[3]
+                                            jog[3] = jog[2]
                                             pon[3] = pon[2]
+                                            jog[2] = nome2
                                             pon[2] = pontos
                                     else:
+                                        jog[4] = jog[3]
                                         pon[4] = pon[3]
+                                        jog[3] = nome2
                                         pon[3] = pontos
                                 else:
+                                    jog[4] = nome2
                                     pon[4] = pontos
                             else:
                                 print("troxa")
@@ -326,10 +341,10 @@ class App:
             frame_colocacao3.place(height=160, width=120, x=510, y=220)
             frame_colocacao3.config()
             frame_colocacao4 = Frame(frame_placar, style='Plac.TFrame')
-            frame_colocacao4.place(height=160, width=120, x=70, y=400)
+            frame_colocacao4.place(height=160, width=120, x=170, y=400)
             frame_colocacao4.config()
             frame_colocacao5 = Frame(frame_placar, style='Plac.TFrame')
-            frame_colocacao5.place(height=160, width=120, x=610, y=400)
+            frame_colocacao5.place(height=160, width=120, x=510, y=400)
             frame_colocacao5.config()
 
             image_primeiro = PhotoImage(file="Imagens\\primeiro.png")
