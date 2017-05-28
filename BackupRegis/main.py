@@ -62,18 +62,38 @@ class App:
                     palavras3 = pickle.load(inputFile)
                     palavra = palavras3[random.randint(0,4)]
 
+
                 #gerador do label que vai representar a palavra
-                x = "_"
-                y = " _"
+                tracosX = "_"
+                y = "_"
                 for i in range(len(palavra)-1):
-                    x+=y
-                print (palavra)
-                print (x)
+                    tracosX+=y
+                tracos = Label(text = tracosX)
+                tracos.pack()
+
+                
+                
                 
                 
                 
                 def letraA():
-                    print("X")
+                    k = "a"
+                    acertos = []
+                    for i in range(len(acertos)):
+                        if(acertos[i] == 0):
+                            parte2 = tracos[1:len(tracos)]
+                            tracos = k + parte2
+                        if(acertos[i] == len(tracos)):
+                            parte1 = tracos[0:(len(tracos)-1)]
+                            tracos = parte1 + k
+                        else:
+                            parte1 = tracos[0:(acertos[i]-1)]
+                            parte2 = tracos[(acertos[i]+1):len(tracos)]
+                            tracos = parte1 + k + parte2
+                    print (tracos)
+                        
+                    
+                        
                 def letraB():
                     print("X")
                 def letraC():
@@ -163,10 +183,6 @@ class App:
                 contEsq20.pack(side="left")
                 contDir20 = Frame(height=100,width=400)
                 contDir20.pack(side="bottom")
-##                #Traços
-##                for i in range(len(palavra)):
-##                    quantostracos += 1
-##                tracos = Label(text)
                 #botões
                 A = Button(contBai20,text="A",command=letraA)
                 A.pack(side="left")
