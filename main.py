@@ -292,10 +292,10 @@ class App:
             frame_colocacao3.place(height=160, width=120, x=510, y=220)
             frame_colocacao3.config()
             frame_colocacao4 = Frame(frame_placar, style='Plac.TFrame')
-            frame_colocacao4.place(height=160, width=120, x=170, y=400)
+            frame_colocacao4.place(height=160, width=120, x=70, y=400)
             frame_colocacao4.config()
             frame_colocacao5 = Frame(frame_placar, style='Plac.TFrame')
-            frame_colocacao5.place(height=160, width=120, x=510, y=400)
+            frame_colocacao5.place(height=160, width=120, x=610, y=400)
             frame_colocacao5.config()
 
             image_primeiro = PhotoImage(file="Imagens\\primeiro.png")
