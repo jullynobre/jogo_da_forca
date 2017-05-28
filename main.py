@@ -8,8 +8,8 @@ class App:
     def __init__(self, root=None):
         array_letras = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "p",
                         "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
+        array_buttons = []
 
-        array_frames = []
         s = Style()
 
         s.configure('Title.TFrame', background='#00008D')
@@ -75,6 +75,8 @@ class App:
                     #palavra = palavras3[random.randint(0,4)]
 
                 def jogar_letra(letra):
+                    index = array_letras.index(letra)
+                    array_buttons[index].state(["disabled"])
                     print(letra)
 
                 frame1 = Frame(frame_jogo_right)
@@ -93,17 +95,21 @@ class App:
                 x = 1
                 for i in range(26):
                     if x == 1:
-                        Button(frame1, text=array_letras[i],
-                               command=lambda name=i: jogar_letra(array_letras[name])).pack(pady=10)
+                        array_buttons.append(Button(frame1, text=array_letras[i],
+                                                    command=lambda name=i: jogar_letra(array_letras[name])))
+                        array_buttons[i].pack(pady=10)
                     elif x == 2:
-                        Button(frame2, text=array_letras[i],
-                               command=lambda name=i: jogar_letra(array_letras[name])).pack(pady=10)
+                        array_buttons.append(Button(frame2, text=array_letras[i],
+                                                    command=lambda name=i: jogar_letra(array_letras[name])))
+                        array_buttons[i].pack(pady=10)
                     elif x == 3:
-                        Button(frame3, text=array_letras[i],
-                               command=lambda name=i: jogar_letra(array_letras[name])).pack(pady=10)
+                        array_buttons.append(Button(frame3, text=array_letras[i],
+                                                    command=lambda name=i: jogar_letra(array_letras[name])))
+                        array_buttons[i].pack(pady=10)
                     elif x == 4:
-                        Button(frame4, text=array_letras[i],
-                               command=lambda name=i: jogar_letra(array_letras[name])).pack(pady=10)
+                        array_buttons.append(Button(frame4, text=array_letras[i],
+                                                    command=lambda name=i: jogar_letra(array_letras[name])))
+                        array_buttons[i].pack(pady=10)
                         x = 0
                     x += 1
 
