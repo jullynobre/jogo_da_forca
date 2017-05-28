@@ -134,6 +134,23 @@ class App:
                             erros += 1
                             array_forcas[erros].pack()
                         else:
+                            inputFile = open("ranking.pkl", 'rb')
+                            
+                            jog = pickle.load(inputFile)
+                            pon = pickle.load(inputFile)
+                            
+                            inputFile.close()
+
+                            jog.append(nome2)
+                            pon.append(pontos)
+                            
+                            output = open("ranking.pkl",'wb')
+
+                            pickle.dump(jog, output)
+                            pickle.dump(pon, output)
+
+                            output.close()
+                            
                             frame_jogo_left.destroy()
                             frame_jogo_right.destroy()
                             titulo_frame.destroy()
@@ -161,6 +178,7 @@ class App:
                             voltar2 = Button(frame_game_over, text="Voltar", style='MenuButtons.TButton',
                                             command=voltar2)
                             voltar2.pack(pady=20)
+                            
 
                         output = open("save.pkl", 'wb')
                         
