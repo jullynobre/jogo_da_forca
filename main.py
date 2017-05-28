@@ -45,6 +45,7 @@ class App:
 
             def iniciar():
                 difi = lista.get()
+                print(difi)
                 nome2 = nome_jogador.get()
 
                 
