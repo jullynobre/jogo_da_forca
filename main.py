@@ -8,6 +8,7 @@ class App:
         array_letras = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "p",
                         "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
         array_buttons = []
+        entry_letras = []
 
         s = Style()
 
@@ -17,6 +18,7 @@ class App:
         s.configure('D.TLabel', foreground="#00008D", font=("", 15))
         s.configure('D.TEntry', foreground="#00008D")
         s.configure('MenuButtons.TButton', highlightbackground="#C8C4FF", foreground="#00008D", font=("", 15))
+        s.configure('words.TButton', highlightbackground="#C8C4FF", foreground="#00008D", font=("", 10))
 
         titulo_frame = Frame(root, style='Title.TFrame')
         titulo_frame.place(height=100, width=800)
@@ -67,8 +69,16 @@ class App:
                 for i in range(len(palavra)-1):
                     tracosX += y
 
+                frame_tracos = Frame(frame_jogo_left)
+                frame_tracos.place(height=30, width=315, x=10)
+                frame_tracos.pack(side="bottom")
 
-                # Forc
+                for i in range(len(palavra)):
+                    entry_letras.append(Entry(frame_tracos, style='D.TEntry', font=("", 20), width=2))
+                    entry_letras[i].pack(side='left', padx=5)
+                    entry_letras[i].state(["disabled"])
+
+
                 forca = PhotoImage(file="forca0.png")
                 label20 = Label(frame_jogo_left, image=forca)
                 label20.pack(side="left")
@@ -92,7 +102,6 @@ class App:
                             parte1 = tracos[0:(acertos[i]-1)]
                             parte2 = tracos[(acertos[i]+1):len(tracos)]
                             tracos = parte1 + letra + parte2
-                    
 
                 frame1 = Frame(frame_jogo_right)
                 frame1.place(height=380, width=75, x=0)
@@ -110,19 +119,19 @@ class App:
                 x = 1
                 for i in range(26):
                     if x == 1:
-                        array_buttons.append(Button(frame1, text=array_letras[i],
+                        array_buttons.append(Button(frame1, text=array_letras[i], style='words.TButton',
                                                     command=lambda name=i: jogar_letra(array_letras[name])))
                         array_buttons[i].pack(pady=10)
                     elif x == 2:
-                        array_buttons.append(Button(frame2, text=array_letras[i],
+                        array_buttons.append(Button(frame2, text=array_letras[i], style='words.TButton',
                                                     command=lambda name=i: jogar_letra(array_letras[name])))
                         array_buttons[i].pack(pady=10)
                     elif x == 3:
-                        array_buttons.append(Button(frame3, text=array_letras[i],
+                        array_buttons.append(Button(frame3, text=array_letras[i], style='words.TButton',
                                                     command=lambda name=i: jogar_letra(array_letras[name])))
                         array_buttons[i].pack(pady=10)
                     elif x == 4:
-                        array_buttons.append(Button(frame4, text=array_letras[i],
+                        array_buttons.append(Button(frame4, text=array_letras[i], style='words.TButton',
                                                     command=lambda name=i: jogar_letra(array_letras[name])))
                         array_buttons[i].pack(pady=10)
                         x = 0
