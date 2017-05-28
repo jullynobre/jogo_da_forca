@@ -61,30 +61,34 @@ class App:
                     palavras3 = pickle.load(inputFile)
                     palavra = palavras3[random.randint(0, 4)]
 
-                # gerador do label que vai representar a palavra
-                x = "_"
-                y = " _"
-                for i in range(len(palavra) - 1):
-                    x += y
-                print(palavra)
-                print(x)
+                #gerador do label que vai representar a palavra
+                tracosX = "_"
+                y = "_"
+                for i in range(len(palavra)-1):
+                    tracosX += y
 
-                # Traços
-                ##                for i in range(len(palavra)):
-                ##                    quantostracos += 1
-                ##                tracos = Label(text)
-                # botões
 
                 # Forc
                 forca = PhotoImage(file="forca0.png")
                 label20 = Label(frame_jogo_left, image=forca)
                 label20.pack(side="left")
 
-                # palavra = palavras3[random.randint(0,4)]
 
                 def jogar_letra(letra):
                     index = array_letras.index(letra)
                     array_buttons[index].state(["disabled"])
+                    for i in range(len(acertos)):
+                        if(acertos[i] == 0):
+                            parte2 = tracos[1:len(tracos)]
+                            tracos = letra + parte2
+                        if(acertos[i] == len(tracos)):
+                            parte1 = tracos[0:(len(tracos)-1)]
+                            tracos = parte1 + letra
+                        else:
+                            parte1 = tracos[0:(acertos[i]-1)]
+                            parte2 = tracos[(acertos[i]+1):len(tracos)]
+                            tracos = parte1 + letra + parte2
+                    
 
                 frame1 = Frame(frame_jogo_right)
                 frame1.place(height=380, width=75, x=0)
