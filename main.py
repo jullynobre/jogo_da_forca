@@ -3,6 +3,7 @@ from tkinter.ttk import *
 import pickle
 import random
 
+
 class App:
     def __init__(self, root=None):
         array_letras = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P",
@@ -17,6 +18,7 @@ class App:
         s = Style()
 
         s.configure('Title.TFrame', background='#00008D')
+        s.configure('Plac.TFrame', background='#FFFFFF')
         s.configure('Container.TFrame')
         s.configure('T.TLabel', background="#00008D", foreground="white", font=("", 35))
         s.configure('GO.TLabel', background="#00008D", foreground="white")
@@ -249,14 +251,85 @@ class App:
             voltar = Button(frame_iniciar_jogo, text="Voltar", style='MenuButtons.TButton', command=voltar)
             voltar.pack()
 
+        def placar():
+            main_frame.destroy()
+            frame_placar = Frame(root, style='Plac.TFrame')
+            frame_placar.place(height=600, width=800, y=0)
+            frame_placar.config()
+
+            titulo_frame = Frame(root, style='Title.TFrame')
+            titulo_frame.place(height=100, width=800)
+            titulo_frame.config()
+
+            titulo = Label(titulo_frame, text="JOGO DA FORCA", style='T.TLabel')
+            titulo.pack(pady=20)
+
+            frame_colocacao1 = Frame(frame_placar, style='Plac.TFrame')
+            frame_colocacao1.place(height=160, width=120, x=340, y=160)
+            frame_colocacao1.config()
+            frame_colocacao2 = Frame(frame_placar, style='Plac.TFrame')
+            frame_colocacao2.place(height=160, width=120, x=170, y=220)
+            frame_colocacao2.config()
+            frame_colocacao3 = Frame(frame_placar, style='Plac.TFrame')
+            frame_colocacao3.place(height=160, width=120, x=510, y=220)
+            frame_colocacao3.config()
+            frame_colocacao4 = Frame(frame_placar, style='Plac.TFrame')
+            frame_colocacao4.place(height=160, width=120, x=170, y=400)
+            frame_colocacao4.config()
+            frame_colocacao5 = Frame(frame_placar, style='Plac.TFrame')
+            frame_colocacao5.place(height=160, width=120, x=510, y=400)
+            frame_colocacao5.config()
+
+            image_primeiro = PhotoImage(file="Imagens\\primeiro.png")
+            image_outros = PhotoImage(file="Imagens\\outros.png")
+
+            lp = Label(frame_colocacao1, image=image_primeiro)
+            lp.image = image_primeiro
+            lp.pack(side="top")
+            lp = Label(frame_colocacao2, image=image_outros)
+            lp.image = image_outros
+            lp.pack(side="top")
+            lp = Label(frame_colocacao3, image=image_outros)
+            lp.image = image_outros
+            lp.pack(side="top")
+            lp = Label(frame_colocacao4, image=image_outros)
+            lp.image = image_outros
+            lp.pack(side="top")
+            lp = Label(frame_colocacao5, image=image_outros)
+            lp.image = image_outros
+            lp.pack(side="top")
+
+            lp = Label(frame_colocacao1, text="Player: Arg", style="Dp.TLabel", font=("", 10))
+            lp.pack(side="bottom")
+            lp = Label(frame_colocacao1, text="Pontuação: 987", style="Dp.TLabel", font=("", 10))
+            lp.pack(side="bottom")
+            lp = Label(frame_colocacao2, text="Player: Arg", style="Dp.TLabel", font=("", 10))
+            lp.pack(side="bottom")
+            lp = Label(frame_colocacao2, text="Pontuação: 987", style="Dp.TLabel", font=("", 10))
+            lp.pack(side="bottom")
+            lp = Label(frame_colocacao3, text="Player: ...", style="Dp.TLabel", font=("", 10))
+            lp.pack(side="bottom")
+            lp = Label(frame_colocacao3, text="Pontuação: 987", style="Dp.TLabel", font=("", 10))
+            lp.pack(side="bottom")
+            lp = Label(frame_colocacao4, text="Player: mais um", style="Dp.TLabel", font=("", 10))
+            lp.pack(side="bottom")
+            lp = Label(frame_colocacao4, text="Pontuação: 987", style="Dp.TLabel", font=("", 10))
+            lp.pack(side="bottom")
+            lp = Label(frame_colocacao5, text="Player: oto", style="Dp.TLabel", font=("", 10))
+            lp.pack(side="bottom")
+            lp = Label(frame_colocacao5, text="Pontuação: 987", style="Dp.TLabel", font=("", 10))
+            lp.pack(side="bottom")
+
         novo_jogo = Button(main_frame, text="        Novo Jogo       ", style='MenuButtons.TButton', command=novojogo)
         novo_jogo.pack(pady=20)
         continuar_jogo = Button(main_frame, text="     Continuar Jogo    ", style='MenuButtons.TButton')
         continuar_jogo.pack(pady=20)
-        placares_jogo = Button(main_frame, text="         Placares         ", style='MenuButtons.TButton')
+        continuar_jogo.state(['disabled'])
+        placares_jogo = Button(main_frame, text="         Placares         ", style='MenuButtons.TButton', command=placar)
         placares_jogo.pack(pady=20)
         gerenciar_palavras = Button(main_frame, text="  Gerenciar Palavras ", style='MenuButtons.TButton')
         gerenciar_palavras.pack(pady=20)
+        gerenciar_palavras.state(['disabled'])
 
 root = Tk()
 root.geometry("800x600+50+50")
