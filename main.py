@@ -77,6 +77,10 @@ class App:
                 def jogar_letra(letra):
                     index = array_letras.index(letra)
                     array_buttons[index].state(["disabled"])
+                    acertos = []
+                    for i in range(len(palavra)):
+                        if(palavra[i] == letra):
+                            acertos.append[i]
                     for i in range(len(acertos)):
                         if(acertos[i] == 0):
                             parte2 = tracos[1:len(tracos)]
