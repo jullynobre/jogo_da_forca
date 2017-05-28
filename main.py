@@ -130,7 +130,7 @@ class App:
                         erros = pickle.load(inputFile)
                         inputFile.close()
                         pontos -= int(dPontos)
-                        if(erros == 6):
+                        if erros == 6:
                             print(1)
                             frame_jogo_left.destroy()
                             frame_jogo_right.destroy()
