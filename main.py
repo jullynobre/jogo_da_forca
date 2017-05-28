@@ -272,6 +272,18 @@ class App:
                             lp.pack(side="top")
                             lp = Label(frame_congra, text=("Pontuação: " + pontos), font=("", 30))
                             lp.pack(pady=50)
+
+                            def voltar():
+                                root.destroy()
+                                newroot = Tk()
+                                newroot.geometry("800x600+50+50")
+                                App(newroot)
+                                newroot.mainloop()
+
+                            voltar = Button(frame_iniciar_jogo, text="Voltar", style='MenuButtons.TButton',
+                                            command=voltar)
+                            voltar.pack()
+
                 frame1 = Frame(frame_jogo_right)
                 frame1.place(height=380, width=75, x=0)
                 frame1.config()
