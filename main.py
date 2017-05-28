@@ -11,7 +11,7 @@ class App:
         array_buttons = []
         entry_letras = []
         array_forcas = [1, 2, 3, 4, 5, 6, 7]
-
+        completo = []
         erros = 0
         acertos = 0
 
@@ -50,9 +50,8 @@ class App:
             def iniciar():
                 difi = lista.get()
                 nome2 = nome_jogador.get()
-
-                
                 frame_iniciar_jogo.destroy()
+
                 frame_jogo_left = Frame(root, style='Container.TFrame')
                 frame_jogo_left.place(height=400, width=335, x=50, y=150)
                 frame_jogo_left.config()
@@ -130,7 +129,7 @@ class App:
                         dPontos = pickle.load(inputFile)
                         erros = pickle.load(inputFile)
                         inputFile.close()
-                        pontos -= dPontos
+                        pontos = str(int(pontos) - int(dPontos))
                         if erros < 6:
                             array_forcas[erros].destroy()
                             erros += 1
@@ -180,7 +179,6 @@ class App:
                             voltar2 = Button(frame_game_over, text="Voltar", style='MenuButtons.TButton',
                                             command=voltar2)
                             voltar2.pack(pady=20)
-                            
 
                         output = open("save.pkl", 'wb')
                         
@@ -192,15 +190,49 @@ class App:
                         
                         output.close()
                     else:
+                        inputFile = open("save.pkl", 'rb')
+                        difi = pickle.load(inputFile)
+                        nome2 = pickle.load(inputFile)
+                        pontos = pickle.load(inputFile)
+                        dPontos = pickle.load(inputFile)
+                        erros = pickle.load(inputFile)
+                        inputFile.close()
+
                         while palavra_auxiliar.count(letra) > 0:
                             index = palavra_auxiliar.index(letra)
                             palavra_auxiliar[index] = "-"
-                            print(palavra_auxiliar, index)
+
+                            pontos = str(int(pontos)+100)
 
                             entry_letras[index].state(["!disabled"])
                             entry_letras[index].insert(0, letra)
                             entry_letras[index].state(["disabled"])
+                            completo.append("-")
+                        output = open("save.pkl", 'wb')
+                        pickle.dump(difi, output)
+                        pickle.dump(nome2, output)
+                        pickle.dump(pontos, output)
+                        pickle.dump(dPontos, output)
+                        pickle.dump(erros, output)
+                        output.close()
 
+
+                        if len(completo) == len(palavra_auxiliar):
+                            frame_jogo_left.destroy()
+                            frame_jogo_right.destroy()
+                            titulo_frame.destroy()
+
+                            frame_congra = Frame(root, style='Plac.TFrame')
+                            frame_congra.place(height=600, width=800, x=0, y=0)
+                            frame_congra.config()
+
+                            image_cong = PhotoImage(file="Imagens\\congratulations.png")
+
+                            lp = Label(frame_congra, image=image_cong)
+                            lp.image = image_cong
+                            lp.pack(side="top")
+                            lp = Label(frame_congra, text=("Pontuação: " + pontos), font=("", 30))
+                            lp.pack(pady=50)
                 frame1 = Frame(frame_jogo_right)
                 frame1.place(height=380, width=75, x=0)
                 frame1.config()
