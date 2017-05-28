@@ -66,6 +66,8 @@ class App:
                     palavras3 = pickle.load(inputFile)
                     palavra = palavras3[random.randint(0, 4)]
 
+                palavra = "cassaco"
+
                 #gerador do label que vai representar a palavra
                 tracosX = "_"
                 y = "_"
@@ -79,12 +81,12 @@ class App:
                 for i in range(len(palavra)):
                     entry_letras.append(Entry(frame_tracos, style='D.TEntry', font=("", 20), width=2))
                     entry_letras[i].pack(side='left', padx=5)
-                    #entry_letras[i].state(["disabled"])
+                    entry_letras[i].state(["disabled"])
 
+                #forca = PhotoImage(file="forca0.png")
+                #label20 = Label(frame_jogo_left, image=forca)
+                #label20.pack(side="left")
 
-                forca = PhotoImage(file="forca0.png")
-                label20 = Label(frame_jogo_left, image=forca)
-                label20.pack(side="left")
 
                 palavra = palavra.upper()
 
@@ -100,9 +102,13 @@ class App:
                         print("if")
                     else:
                         while palavra_auxiliar.count(letra) > 0:
-                            index = palavra.index(letra)
+                            index = palavra_auxiliar.index(letra)
                             palavra_auxiliar[index] = "-"
+                            print(palavra_auxiliar, index)
+
+                            entry_letras[index].state(["!disabled"])
                             entry_letras[index].insert(0, letra)
+                            entry_letras[index].state(["disabled"])
                     '''
                     acertos = []
                     for i in range(len(palavra)):
