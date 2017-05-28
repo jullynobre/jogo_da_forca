@@ -49,7 +49,6 @@ class App:
 
             def iniciar():
                 difi = lista.get()
-                print(difi)
                 nome2 = nome_jogador.get()
 
                 
@@ -124,12 +123,15 @@ class App:
 
                     palavra_auxiliar = list(palavra)
                     if palavra.count(letra) == 0:
+                        
                         inputFile = open("save.pkl", 'rb')
+                        difi = pickle.load(inputFile)
+                        nome2 = pickle.load(inputFile)
                         pontos = pickle.load(inputFile)
                         dPontos = pickle.load(inputFile)
                         erros = pickle.load(inputFile)
                         inputFile.close()
-                        pontos -= int(dPontos)
+                        pontos -= dPontos
                         if erros == 6:
                             print(1)
                             frame_jogo_left.destroy()
@@ -138,10 +140,15 @@ class App:
                             array_forcas[pontuacao[0]].destroy()
                             pontuacao[0] = pontuacao[0] + 1
                             array_forcas[pontuacao[0]].pack()
+                        print(pontos)
                         output = open("save.pkl", 'wb')
                         
-                        pickle.dump(erros, output)
+                        pickle.dump(difi, output)
+                        pickle.dump(nome2, output)
                         pickle.dump(pontos, output)
+                        pickle.dump(dPontos, output)
+                        pickle.dump(erros, output)
+                        
                         output.close()
                     else:
                         while palavra_auxiliar.count(letra) > 0:
