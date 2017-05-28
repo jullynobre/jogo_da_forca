@@ -39,8 +39,13 @@ class App:
             lbl_nome_jogador = Label(frame_iniciar_jogo, text="Nome do Jogador: ", style='D.TLabel')
             lbl_nome_jogador.pack(pady=20)
 
-            str_nome = StringVar()
-            nome_jogador = Entry(frame_iniciar_jogo, style='D.TEntry', font=("", 15), width=30)
+            def callback(nome):
+                print(nome.get())
+
+            nome = StringVar()
+            nome.trace("w", lambda name, index, mode, nome=nome: callback(nome))
+            nome_jogador = Entry(frame_iniciar_jogo, style='D.TEntry', font=("", 15), width=30,
+                                 textvariable=nome)
             nome_jogador.pack()
 
             lbl_dificuldade = Label(frame_iniciar_jogo, text="Dificuldade: ", style='D.TLabel')
@@ -279,7 +284,6 @@ class App:
                 def jogar_letra(letra):
                     index = array_letras.index(letra)
                     array_buttons[index].state(["disabled"])
-                    print(letra)
 
                 frame1 = Frame(frame_jogo_right)
                 frame1.place(height=380, width=75, x=0)
@@ -325,6 +329,8 @@ class App:
 
             iniciar = Button(frame_iniciar_jogo, text="Iniciar", style='MenuButtons.TButton', command=iniciar)
             iniciar.pack(pady=50)
+            iniciar.state(["disabled"])
+
             voltar = Button(frame_iniciar_jogo, text="Voltar", style='MenuButtons.TButton', command=voltar)
             voltar.pack()
 
