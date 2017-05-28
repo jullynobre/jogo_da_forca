@@ -11,9 +11,6 @@ class App:
         entry_letras = []
         array_forcas = [1, 2, 3, 4, 5, 6, 7]
 
-        # pontuação = [erros, acertos, pontuação final]
-        pontuacao = [0, 0, 0]
-
         erros = 0
         acertos = 0
 
@@ -132,14 +129,12 @@ class App:
                         inputFile.close()
                         pontos -= dPontos
                         if erros < 6:
-                            array_forcas[pontuacao[0]].destroy()
-                            pontuacao[0] = pontuacao[0] + 1
-                            array_forcas[pontuacao[0]].pack()
+                            array_forcas[erros].destroy()
                             erros += 1
+                            array_forcas[erros].pack()
                         else:
                             frame_jogo_left.destroy()
                             frame_jogo_right.destroy()
-                        print(pontos)
                         output = open("save.pkl", 'wb')
                         
                         pickle.dump(difi, output)
