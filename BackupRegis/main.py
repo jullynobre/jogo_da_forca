@@ -62,6 +62,7 @@ class App:
                     palavras3 = pickle.load(inputFile)
                     palavra = palavras3[random.randint(0,4)]
 
+                
 
                 #gerador do label que vai representar a palavra
                 tracosX = "_"
