@@ -19,6 +19,7 @@ class App:
         s.configure('Title.TFrame', background='#00008D')
         s.configure('Container.TFrame')
         s.configure('T.TLabel', background="#00008D", foreground="white", font=("", 35))
+        s.configure('GO.TLabel', background="#00008D", foreground="white")
         s.configure('D.TLabel', foreground="#00008D", font=("", 15))
         s.configure('D.TEntry', foreground="#00008D")
         s.configure('MenuButtons.TButton', highlightbackground="#C8C4FF", foreground="#00008D", font=("", 15))
@@ -105,7 +106,7 @@ class App:
 
                 i = 1
                 while i < 8:
-                    image = PhotoImage(file=("Forcas\\forca0" + str(i) + ".png"))
+                    image = PhotoImage(file=("Imagens\\forca0" + str(i) + ".png"))
                     array_forcas[(i - 1)] = Label(frame_jogo_left, image=image)
                     array_forcas[(i - 1)].image = image
                     i += 1
@@ -135,6 +136,32 @@ class App:
                         else:
                             frame_jogo_left.destroy()
                             frame_jogo_right.destroy()
+                            titulo_frame.destroy()
+
+                            frame_game_over = Frame(root, style='Title.TFrame')
+                            frame_game_over.place(height=600, width=800, x=0, y=0)
+                            frame_game_over.config()
+
+                            image_game_over = PhotoImage(file="Imagens\\gameover.png")
+                            label_game_over = Label(frame_game_over, image=image_game_over, style='GO.TLabel')
+                            label_game_over.image = image_game_over
+                            label_game_over.pack(padx=215, pady=20)
+
+                            label_pontuacao = Label(frame_game_over, text=("Pontuação: " + str(pontos)),
+                                                    style='GO.TLabel', font=("", 30))
+                            label_pontuacao.pack()
+
+                            def voltar2():
+                                root.destroy()
+                                newroot = Tk()
+                                newroot.geometry("800x600+50+50")
+                                App(newroot)
+                                newroot.mainloop()
+
+                            voltar2 = Button(frame_game_over, text="Voltar", style='MenuButtons.TButton',
+                                            command=voltar2)
+                            voltar2.pack(pady=20)
+
                         output = open("save.pkl", 'wb')
                         
                         pickle.dump(difi, output)
@@ -153,23 +180,7 @@ class App:
                             entry_letras[index].state(["!disabled"])
                             entry_letras[index].insert(0, letra)
                             entry_letras[index].state(["disabled"])
-                    '''
-                    acertos = []
-                    for i in range(len(palavra)):
-                        if (palavra[i] == letra):
-                            acertos.append[i]
-                    for i in range(len(acertos)):
-                        if (acertos[i] == 0):
-                            parte2 = tracos[1:len(tracos)]
-                            tracos = letra + parte2
-                        if (acertos[i] == len(tracos)):
-                            parte1 = tracos[0:(len(tracos) - 1)]
-                            tracos = parte1 + letra
-                        else:
-                            parte1 = tracos[0:(acertos[i] - 1)]
-                            parte2 = tracos[(acertos[i] + 1):len(tracos)]
-                            tracos = parte1 + letra + parte2
-                    '''
+
                 frame1 = Frame(frame_jogo_right)
                 frame1.place(height=380, width=75, x=0)
                 frame1.config()
