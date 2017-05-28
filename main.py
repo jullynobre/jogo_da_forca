@@ -9,6 +9,10 @@ class App:
                         "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
         array_buttons = []
         entry_letras = []
+        array_forcas = [1, 2, 3, 4, 5, 6, 7]
+
+        # pontuação = [erros, acertos, pontuação final]
+        pontuacao = [0, 0, 0]
 
         erros = 0
         acertos = 0
@@ -103,13 +107,16 @@ class App:
                     entry_letras[i].pack(side='left', padx=5)
                     entry_letras[i].state(["disabled"])
 
-                #forca = PhotoImage(file="forca0.png")
-                #label20 = Label(frame_jogo_left, image=forca)
-                #label20.pack(side="left")
+                i = 1
+                while i < 8:
+                    image = PhotoImage(file=("Forcas\\forca0" + str(i) + ".png"))
+                    array_forcas[(i - 1)] = Label(frame_jogo_left, image=image)
+                    array_forcas[(i - 1)].image = image
+                    i += 1
 
+                array_forcas[0].pack()
 
                 palavra = palavra.upper()
-
 
                 def jogar_letra(letra):
                     index = array_letras.index(letra)
@@ -118,28 +125,24 @@ class App:
                     palavra_auxiliar = list(palavra)
                     if palavra.count(letra) == 0:
                         inputFile = open("save.pkl", 'rb')
-                        
                         pontos = pickle.load(inputFile)
                         dPontos = pickle.load(inputFile)
                         erros = pickle.load(inputFile)
-                        
                         inputFile.close()
-
-                        
-                        pontos -= dPontos
-
-
+                        pontos -= int(dPontos)
                         if(erros == 6):
                             print(1)
-
-
-                        output = open("save.pkl",'wb')
+                            frame_jogo_left.destroy()
+                            frame_jogo_right.destroy()
+                        else:
+                            array_forcas[pontuacao[0]].destroy()
+                            pontuacao[0] = pontuacao[0] + 1
+                            array_forcas[pontuacao[0]].pack()
+                        output = open("save.pkl", 'wb')
                         
                         pickle.dump(erros, output)
                         pickle.dump(pontos, output)
-
                         output.close()
-                        
                     else:
                         while palavra_auxiliar.count(letra) > 0:
                             index = palavra_auxiliar.index(letra)
