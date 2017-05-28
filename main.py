@@ -143,8 +143,32 @@ class App:
                             
                             inputFile.close()
 
-                            jog.append(nome2)
-                            pon.append(pontos)
+                            if(pontos - pon[4] > 0):
+                                if(pontos - pon[3] > 0):
+                                    if(pontos - pon[2] > 0):
+                                        if(pontos - pon[1] > 0):
+                                            if(pontos - pon[0] > 0):
+                                                pon[4] = pon[4]
+                                                pon[3] = pon[3]
+                                                pon[2] = pon[2]
+                                                pon[1] = pon[0]
+                                                pon[0] = pontos
+                                            else:
+                                                pon[5] = pon[4]
+                                                pon[4] = pon[3]
+                                                pon[3] = pon[2]
+                                                pon[2] = pontos
+                                        else:
+                                            pon[4] = pon[3]
+                                            pon[3] = pon[2]
+                                            pon[2] = pontos
+                                    else:
+                                        pon[4] = pon[3]
+                                        pon[3] = pontos
+                                else:
+                                    pon[4] = pontos
+                            else:
+                                print("troxa")
                             
                             output = open("ranking.pkl",'wb')
 
@@ -270,6 +294,16 @@ class App:
             voltar.pack()
 
         def placar():
+            inputFile = open("ranking.pkl", 'rb')
+                            
+            jog = pickle.load(inputFile)
+            pon = pickle.load(inputFile)
+                            
+            inputFile.close()
+
+
+            
+            
             main_frame.destroy()
             frame_placar = Frame(root, style='Plac.TFrame')
             frame_placar.place(height=600, width=800, y=0)
@@ -317,25 +351,25 @@ class App:
             lp.image = image_outros
             lp.pack(side="top")
 
-            lp = Label(frame_colocacao1, text="Player: Arg", style="Dp.TLabel", font=("", 10))
+            lp = Label(frame_colocacao1, text=jog[0], style="Dp.TLabel", font=("", 10))
             lp.pack(side="bottom")
-            lp = Label(frame_colocacao1, text="Pontuação: 987", style="Dp.TLabel", font=("", 10))
+            lp = Label(frame_colocacao1, text=pon[0], style="Dp.TLabel", font=("", 10))
             lp.pack(side="bottom")
-            lp = Label(frame_colocacao2, text="Player: Arg", style="Dp.TLabel", font=("", 10))
+            lp = Label(frame_colocacao2, text=jog[1], style="Dp.TLabel", font=("", 10))
             lp.pack(side="bottom")
-            lp = Label(frame_colocacao2, text="Pontuação: 987", style="Dp.TLabel", font=("", 10))
+            lp = Label(frame_colocacao2, text=pon[1], style="Dp.TLabel", font=("", 10))
             lp.pack(side="bottom")
-            lp = Label(frame_colocacao3, text="Player: ...", style="Dp.TLabel", font=("", 10))
+            lp = Label(frame_colocacao3, text=jog[2], style="Dp.TLabel", font=("", 10))
             lp.pack(side="bottom")
-            lp = Label(frame_colocacao3, text="Pontuação: 987", style="Dp.TLabel", font=("", 10))
+            lp = Label(frame_colocacao3, text=pon[2], style="Dp.TLabel", font=("", 10))
             lp.pack(side="bottom")
-            lp = Label(frame_colocacao4, text="Player: mais um", style="Dp.TLabel", font=("", 10))
+            lp = Label(frame_colocacao4, text=jog[3], style="Dp.TLabel", font=("", 10))
             lp.pack(side="bottom")
-            lp = Label(frame_colocacao4, text="Pontuação: 987", style="Dp.TLabel", font=("", 10))
+            lp = Label(frame_colocacao4, text=pon[3], style="Dp.TLabel", font=("", 10))
             lp.pack(side="bottom")
-            lp = Label(frame_colocacao5, text="Player: oto", style="Dp.TLabel", font=("", 10))
+            lp = Label(frame_colocacao5, text=jog[4], style="Dp.TLabel", font=("", 10))
             lp.pack(side="bottom")
-            lp = Label(frame_colocacao5, text="Pontuação: 987", style="Dp.TLabel", font=("", 10))
+            lp = Label(frame_colocacao5, text=pon[4], style="Dp.TLabel", font=("", 10))
             lp.pack(side="bottom")
 
         novo_jogo = Button(main_frame, text="        Novo Jogo       ", style='MenuButtons.TButton', command=novojogo)

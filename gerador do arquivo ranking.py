@@ -1,7 +1,7 @@
 import pickle
 
-jog = []
-pon = []
+jog = ["Guedes","Jully","Shirley","Afonso","Joãozinho"]
+pon = [3100,3000,2600,2000,1500]
 
 
 
