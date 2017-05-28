@@ -9,9 +9,10 @@ class App:
                         "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
         array_buttons = []
         entry_letras = []
+        array_forcas = [1, 2, 3, 4, 5, 6, 7]
 
-        erros = 0
-        acertos = 0
+        #pontuação = [erros, acertos, pontuação final]
+        pontuacao = [0, 0, 0]
 
         s = Style()
 
@@ -66,8 +67,6 @@ class App:
                     palavras3 = pickle.load(inputFile)
                     palavra = palavras3[random.randint(0, 4)]
 
-                palavra = "cassaco"
-
                 #gerador do label que vai representar a palavra
                 tracosX = "_"
                 y = "_"
@@ -83,13 +82,16 @@ class App:
                     entry_letras[i].pack(side='left', padx=5)
                     entry_letras[i].state(["disabled"])
 
-                #forca = PhotoImage(file="forca0.png")
-                #label20 = Label(frame_jogo_left, image=forca)
-                #label20.pack(side="left")
+                i = 1
+                while i < 8:
+                    image = PhotoImage(file=("Forcas\\forca0" + str(i) + ".png"))
+                    array_forcas[(i - 1)] = Label(frame_jogo_left, image=image)
+                    array_forcas[(i - 1)].image = image
+                    i += 1
 
+                array_forcas[0].pack()
 
                 palavra = palavra.upper()
-
 
                 def jogar_letra(letra):
                     index = array_letras.index(letra)
@@ -98,8 +100,13 @@ class App:
                     palavra_auxiliar = list(palavra)
                     print(palavra)
                     if palavra.count(letra) == 0:
-                        x = 1
-                        print("if")
+                        if pontuacao[0] < 6:
+                            array_forcas[pontuacao[0]].destroy()
+                            pontuacao[0] = pontuacao[0] + 1
+                            array_forcas[pontuacao[0]].pack()
+                        else:
+                            frame_jogo_left.destroy()
+                            frame_jogo_right.destroy()
                     else:
                         while palavra_auxiliar.count(letra) > 0:
                             index = palavra_auxiliar.index(letra)
