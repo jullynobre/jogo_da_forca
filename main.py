@@ -5,10 +5,13 @@ import random
 
 class App:
     def __init__(self, root=None):
-        array_letras = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "p",
+        array_letras = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P",
                         "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
         array_buttons = []
         entry_letras = []
+
+        erros = 0
+        acertos = 0
 
         s = Style()
 
@@ -76,33 +79,47 @@ class App:
                 for i in range(len(palavra)):
                     entry_letras.append(Entry(frame_tracos, style='D.TEntry', font=("", 20), width=2))
                     entry_letras[i].pack(side='left', padx=5)
-                    entry_letras[i].state(["disabled"])
+                    #entry_letras[i].state(["disabled"])
 
 
                 forca = PhotoImage(file="forca0.png")
                 label20 = Label(frame_jogo_left, image=forca)
                 label20.pack(side="left")
 
+                palavra = palavra.upper()
+
 
                 def jogar_letra(letra):
                     index = array_letras.index(letra)
                     array_buttons[index].state(["disabled"])
+
+                    palavra_auxiliar = list(palavra)
+                    print(palavra)
+                    if palavra.count(letra) == 0:
+                        x = 1
+                        print("if")
+                    else:
+                        while palavra_auxiliar.count(letra) > 0:
+                            index = palavra.index(letra)
+                            palavra_auxiliar[index] = "-"
+                            entry_letras[index].insert(0, letra)
+                    '''
                     acertos = []
                     for i in range(len(palavra)):
-                        if(palavra[i] == letra):
+                        if (palavra[i] == letra):
                             acertos.append[i]
                     for i in range(len(acertos)):
-                        if(acertos[i] == 0):
+                        if (acertos[i] == 0):
                             parte2 = tracos[1:len(tracos)]
                             tracos = letra + parte2
-                        if(acertos[i] == len(tracos)):
-                            parte1 = tracos[0:(len(tracos)-1)]
+                        if (acertos[i] == len(tracos)):
+                            parte1 = tracos[0:(len(tracos) - 1)]
                             tracos = parte1 + letra
                         else:
-                            parte1 = tracos[0:(acertos[i]-1)]
-                            parte2 = tracos[(acertos[i]+1):len(tracos)]
+                            parte1 = tracos[0:(acertos[i] - 1)]
+                            parte2 = tracos[(acertos[i] + 1):len(tracos)]
                             tracos = parte1 + letra + parte2
-
+                    '''
                 frame1 = Frame(frame_jogo_right)
                 frame1.place(height=380, width=75, x=0)
                 frame1.config()
