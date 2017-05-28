@@ -50,10 +50,10 @@ class App:
             difi = lista.get()
 
             def iniciar():
+                #escolha da palavra
                 inputFile = open("palavras.pkl",'rb')
                 if(difi == "Fácil"):
                     palavras1 = pickle.load(inputFile)
-                    print(palavras1)
                     palavra = palavras1[random.randint(0,4)]
                 if(difi == "Médio"):
                     palavras2 = pickle.load(inputFile)
@@ -62,6 +62,13 @@ class App:
                     palavras3 = pickle.load(inputFile)
                     palavra = palavras3[random.randint(0,4)]
 
+                #gerador do label que vai representar a palavra
+                x = "_"
+                y = " _"
+                for i in range(len(palavra)-1):
+                    x+=y
+                print (palavra)
+                print (x)
                 
                 
                 
