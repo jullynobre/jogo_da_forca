@@ -8,7 +8,7 @@ class App:
     def __init__(self, root=None):
         array_letras = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "p",
                         "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
-        array_frames = []
+
         s = Style()
 
         s.configure('Title.TFrame', background='#00008D')
@@ -54,13 +54,9 @@ class App:
             def iniciar():
                 frame_iniciar_jogo.destroy()
 
-                frame_jogo_left = Frame(root, style='Container.TFrame')
-                frame_jogo_left.place(height=400, width=335, x=50, y=150)
-                frame_jogo_left.config()
-
-                frame_jogo_right = Frame(root, style='Container.TFrame')
-                frame_jogo_right.place(height=400, width=315, x=435, y=150)
-                frame_jogo_right.config()
+                frame_jogo = Frame(root, style='Container.TFrame')
+                frame_jogo.place(height=400, width=800, y=160)
+                frame_jogo.config()
 
                 inputFile = open("palavras.pkl", 'rb')
                 if(difi == "Fácil"):
@@ -76,35 +72,10 @@ class App:
                 def jogar_letra(letra):
                     print(letra)
 
-                frame1 = Frame(frame_jogo_right)
-                frame1.place(height=380, width=75, x=0)
-                frame1.config()
-                frame2 = Frame(frame_jogo_right)
-                frame2.place(height=380, width=75, x=80)
-                frame2.config()
-                frame3 = Frame(frame_jogo_right)
-                frame3.place(height=380, width=75, x=160)
-                frame3.config()
-                frame4 = Frame(frame_jogo_right)
-                frame4.place(height=380, width=75, x=240)
-                frame4.config()
-
-                x = 1
-                for i in range(26):
-                    if x == 1:
-                        Button(frame1, text=array_letras[i],
-                               command=lambda name=i: jogar_letra(array_letras[name])).pack(pady=10)
-                    elif x == 2:
-                        Button(frame2, text=array_letras[i],
-                               command=lambda name=i: jogar_letra(array_letras[name])).pack(pady=10)
-                    elif x == 3:
-                        Button(frame3, text=array_letras[i],
-                               command=lambda name=i: jogar_letra(array_letras[name])).pack(pady=10)
-                    elif x == 4:
-                        Button(frame4, text=array_letras[i],
-                               command=lambda name=i: jogar_letra(array_letras[name])).pack(pady=10)
-                        x = 0
-                    x += 1
+                i = 0
+                while i < 26:
+                    Button(frame_jogo, text=array_letras[i], command=jogar_letra(array_letras[i])).pack(side="left")
+                    i += 1
 
             def voltar():
                 root.destroy()
