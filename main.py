@@ -48,14 +48,15 @@ class App:
                 frame_jogo_right.place(height=400, width=315, x=435, y=150)
                 frame_jogo_right.config()
 
+                palavra = ""
                 #escolha da palavra
                 inputFile = open("palavras.pkl", 'rb')
                 if (difi == "Fácil"):
                     palavras1 = pickle.load(inputFile)
-                    # palavra = palavras1[random.randint(0,4)]
+                    palavra = palavras1[random.randint(0,4)]
                 elif (difi == "Médio"):
                     palavras2 = pickle.load(inputFile)
-                    # palavra = palavras2[random.randint(0,4)]
+                    palavra = palavras2[random.randint(0,4)]
                 elif (difi == "Difícil"):
                     palavras3 = pickle.load(inputFile)
                     palavra = palavras3[random.randint(0, 4)]
