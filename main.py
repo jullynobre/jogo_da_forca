@@ -4,9 +4,12 @@ import pickle
 import random
 
 
-
 class App:
     def __init__(self, root=None):
+        array_letras = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "p",
+                        "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
+        array_buttons = []
+
         s = Style()
 
         s.configure('Title.TFrame', background='#00008D')
@@ -50,16 +53,35 @@ class App:
             difi = lista.get()
 
             def iniciar():
+<<<<<<< HEAD
                 #escolha da palavra
                 inputFile = open("palavras.pkl",'rb')
                 if(difi == "Fácil"):
                     palavras1 = pickle.load(inputFile)
                     palavra = palavras1[random.randint(0,4)]
                 if(difi == "Médio"):
+=======
+                frame_iniciar_jogo.destroy()
+
+                frame_jogo_left = Frame(root, style='Container.TFrame')
+                frame_jogo_left.place(height=400, width=335, x=50, y=150)
+                frame_jogo_left.config()
+
+                frame_jogo_right = Frame(root, style='Container.TFrame')
+                frame_jogo_right.place(height=400, width=315, x=435, y=150)
+                frame_jogo_right.config()
+
+                inputFile = open("palavras.pkl", 'rb')
+                if(difi == "Fácil"):
+                    palavras1 = pickle.load(inputFile)
+                    #palavra = palavras1[random.randint(0,4)]
+                elif(difi == "Médio"):
+>>>>>>> origin/master
                     palavras2 = pickle.load(inputFile)
-                    palavra = palavras2[random.randint(0,4)]
-                if(difi == "Difícil"):
+                    #palavra = palavras2[random.randint(0,4)]
+                elif(difi == "Difícil"):
                     palavras3 = pickle.load(inputFile)
+<<<<<<< HEAD
                     palavra = palavras3[random.randint(0,4)]
 
                 #gerador do label que vai representar a palavra
@@ -251,10 +273,51 @@ class App:
                 label20.pack(side="left")
 
                 
+=======
+                    #palavra = palavras3[random.randint(0,4)]
+
+                def jogar_letra(letra):
+                    index = array_letras.index(letra)
+                    array_buttons[index].state(["disabled"])
+                    print(letra)
+
+                frame1 = Frame(frame_jogo_right)
+                frame1.place(height=380, width=75, x=0)
+                frame1.config()
+                frame2 = Frame(frame_jogo_right)
+                frame2.place(height=380, width=75, x=80)
+                frame2.config()
+                frame3 = Frame(frame_jogo_right)
+                frame3.place(height=380, width=75, x=160)
+                frame3.config()
+                frame4 = Frame(frame_jogo_right)
+                frame4.place(height=380, width=75, x=240)
+                frame4.config()
+
+                x = 1
+                for i in range(26):
+                    if x == 1:
+                        array_buttons.append(Button(frame1, text=array_letras[i],
+                                                    command=lambda name=i: jogar_letra(array_letras[name])))
+                        array_buttons[i].pack(pady=10)
+                    elif x == 2:
+                        array_buttons.append(Button(frame2, text=array_letras[i],
+                                                    command=lambda name=i: jogar_letra(array_letras[name])))
+                        array_buttons[i].pack(pady=10)
+                    elif x == 3:
+                        array_buttons.append(Button(frame3, text=array_letras[i],
+                                                    command=lambda name=i: jogar_letra(array_letras[name])))
+                        array_buttons[i].pack(pady=10)
+                    elif x == 4:
+                        array_buttons.append(Button(frame4, text=array_letras[i],
+                                                    command=lambda name=i: jogar_letra(array_letras[name])))
+                        array_buttons[i].pack(pady=10)
+                        x = 0
+                    x += 1
+>>>>>>> origin/master
 
             def voltar():
                 root.destroy()
-
                 newroot = Tk()
                 newroot.geometry("800x600+50+50")
                 App(newroot)
@@ -273,12 +336,6 @@ class App:
         placares_jogo.pack(pady=20)
         gerenciar_palavras = Button(main_frame, text="  Gerenciar Palavras ", style='MenuButtons.TButton')
         gerenciar_palavras.pack(pady=20)
-
-
-
-
-
-
 
 root = Tk()
 root.geometry("800x600+50+50")
