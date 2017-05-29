@@ -40,7 +40,6 @@ class App:
 
 
         def contjogo():
-            titulo_frame.destroy()
             main_frame.destroy()
             
             inputFile = open("save.pkl", 'rb')
@@ -52,8 +51,12 @@ class App:
             erros = pickle.load(inputFile)
             palavra = pickle.load(inputFile)
             palavra_auxiliar = pickle.load(inputFile)
+            ativadas = pickle.load(inputFile)
                         
             inputFile.close()
+            palavra_auxiliar = list(palavra_auxiliar)
+            ativadas = list(ativadas)
+            print(palavra)
 
 
             frame_jogo_left = Frame(root, style='Container.TFrame')
@@ -87,9 +90,296 @@ class App:
                 array_forcas[(i - 1)].image = image
                 i += 1
 
-            array_forcas[0].pack()
 
-            palavra = palavra.upper()
+            array_forcas[erros].pack()
+
+
+            def jogar_letra(letra):
+                index = array_letras.index(letra)
+                array_buttons[index].state(["disabled"])
+
+
+                inputFile = open("save.pkl", 'rb')
+                        
+                difi = pickle.load(inputFile)
+                nome2 = pickle.load(inputFile)
+                pontos = pickle.load(inputFile)
+                dPontos = pickle.load(inputFile)
+                erros = pickle.load(inputFile)
+                palavra = pickle.load(inputFile)
+                palavra_auxiliar = pickle.load(inputFile)
+                ativadas = pickle.load(inputFile)
+                        
+                inputFile.close()
+                ativadas = list(ativadas)
+                palavra_auxiliar = list(palavra_auxiliar)
+                    
+                if palavra.count(letra) == 0:
+                        
+                        
+                    pontos = str(int(pontos) - int(dPontos))
+                    if erros < 6:
+                        array_forcas[erros].destroy()
+                        erros += 1
+                        array_forcas[erros].pack()
+                    else:
+                        inputFile = open("ranking.pkl", 'rb')
+                            
+                        jog = pickle.load(inputFile)
+                        pon = pickle.load(inputFile)
+                            
+                        inputFile.close()
+
+                        if (int(pontos) - int(pon[4])) > 0:
+                            if (int(pontos) - int(pon[3])) > 0:
+                                if (int(pontos) - int(pon[2])) > 0:
+                                    if (int(pontos) - int(pon[1])) > 0:
+                                        if (int(pontos) - int(pon[0])) > 0:
+                                            jog[4] = jog[3]
+                                            pon[4] = pon[3]
+                                            jog[3] = jog[2]
+                                            pon[3] = pon[2]
+                                            jog[2] = jog[1]
+                                            pon[2] = pon[1]
+                                            jog[1] = jog[0]
+                                            pon[1] = pon[0]
+                                            jog[0] = nome2
+                                            pon[0] = pontos
+                                        else:
+                                            jog[5] = jog[4]
+                                            pon[5] = pon[4]
+                                            jog[4] = jog[3]
+                                            pon[4] = pon[3]
+                                            jog[3] = jog[2]
+                                            pon[3] = pon[2]
+                                            jog[2] = nome2
+                                            pon[2] = pontos
+                                    else:
+                                        jog[4] = jog[3]
+                                        pon[4] = pon[3]
+                                        jog[3] = jog[2]
+                                        pon[3] = pon[2]
+                                        jog[2] = nome2
+                                        pon[2] = pontos
+                                else:
+                                    jog[4] = jog[3]
+                                    pon[4] = pon[3]
+                                    jog[3] = nome2
+                                    pon[3] = pontos
+                            else:
+                                jog[4] = nome2
+                                pon[4] = pontos
+                        else:
+                            print("troxa")
+                        
+                        output = open("ranking.pkl",'wb')
+                        
+                        pickle.dump(jog, output)
+                        pickle.dump(pon, output)
+
+                        output.close()
+                            
+                        frame_jogo_left.destroy()
+                        frame_jogo_right.destroy()
+                        titulo_frame.destroy()
+
+                        frame_game_over = Frame(root, style='Title.TFrame')
+                        frame_game_over.place(height=600, width=800, x=0, y=0)
+                        frame_game_over.config()
+
+                        image_game_over = PhotoImage(file="Imagens\\gameover.png")
+                        label_game_over = Label(frame_game_over, image=image_game_over, style='GO.TLabel')
+                        label_game_over.image = image_game_over
+                        label_game_over.pack(padx=215, pady=20)
+
+                        label_pontuacao = Label(frame_game_over, text=("Pontuação: " + str(pontos)),
+                                                style='GO.TLabel', font=("", 30))
+                        label_pontuacao.pack()
+
+                        def voltar2():
+                            root.destroy()
+                            newroot = Tk()
+                            newroot.geometry("800x600+50+50")
+                            App(newroot)
+                            newroot.mainloop()
+
+                        voltar2 = Button(frame_game_over, text="Voltar", style='MenuButtons.TButton',
+                                        command=voltar2)
+                        voltar2.pack(pady=20)
+
+                    output = open("save.pkl", 'wb')
+                        
+                    pickle.dump(difi, output)
+                    pickle.dump(nome2, output)
+                    pickle.dump(pontos, output)
+                    pickle.dump(dPontos, output)
+                    pickle.dump(erros, output)
+                    pickle.dump(palavra, output)
+                    pickle.dump(palavra_auxiliar, output)
+                    pickle.dump(ativadas, output)
+                        
+                    output.close()
+                else:
+                    inputFile = open("save.pkl", 'rb')
+                        
+                    difi = pickle.load(inputFile)
+                    nome2 = pickle.load(inputFile)
+                    pontos = pickle.load(inputFile)
+                    dPontos = pickle.load(inputFile)
+                    erros = pickle.load(inputFile)
+                    palavra_auxiliar = pickle.load(inputFile)
+                    ativadas = pickle.load(inputFile)
+                        
+                    inputFile.close()
+                    palavra_auxiliar = list(palavra_auxiliar)
+                    ativadas = list(ativadas)
+
+                    while palavra_auxiliar.count(letra) > 0:
+                        index = palavra_auxiliar.index(letra)
+                        palavra_auxiliar[index] = "-"
+
+                        pontos = str(int(pontos)+100)
+
+                        entry_letras[index].state(["!disabled"])
+                        entry_letras[index].insert(0, letra)
+                        entry_letras[index].state(["disabled"])
+                        completo.append("-")
+                            
+                    output = open("save.pkl",'wb')
+
+                    pickle.dump(difi, output)
+                    pickle.dump(nome2, output)
+                    pickle.dump(pontos, output)
+                    pickle.dump(dPontos, output)
+                    pickle.dump(erros, output)
+                    pickle.dump(palavra, output)
+                    pickle.dump(palavra_auxiliar, output)
+                    pickle.dump(ativadas, output)
+
+                    output.close()
+
+
+                    if len(completo) == len(palavra_auxiliar):
+                        inputFile = open("ranking.pkl", 'rb')
+                            
+                        jog = pickle.load(inputFile)
+                        pon = pickle.load(inputFile)
+                            
+                        inputFile.close()
+
+                        if (int(pontos) - pon[4]) > 0:
+                            if (int(pontos) - pon[3]) > 0:
+                                if (int(pontos) - pon[2]) > 0:
+                                    if (int(pontos) - pon[1]) > 0:
+                                        if (int(pontos) - pon[0]) > 0:
+                                            jog[4] = jog[3]
+                                            pon[4] = pon[3]
+                                            jog[3] = jog[2]
+                                            pon[3] = pon[2]
+                                            jog[2] = jog[1]
+                                            pon[2] = pon[1]
+                                            jog[1] = jog[0]
+                                            pon[1] = pon[0]
+                                            jog[0] = nome2
+                                            pon[0] = pontos
+                                        else:
+                                            jog[5] = jog[4]
+                                            pon[5] = pon[4]
+                                            jog[4] = jog[3]
+                                            pon[4] = pon[3]
+                                            jog[3] = jog[2]
+                                            pon[3] = pon[2]
+                                            jog[2] = nome2
+                                            pon[2] = pontos
+                                    else:
+                                        jog[4] = jog[3]
+                                        pon[4] = pon[3]
+                                        jog[3] = jog[2]
+                                        pon[3] = pon[2]
+                                        jog[2] = nome2
+                                        pon[2] = pontos
+                                else:
+                                    jog[4] = jog[3]
+                                    pon[4] = pon[3]
+                                    jog[3] = nome2
+                                    pon[3] = pontos
+                            else:
+                                jog[4] = nome2
+                                pon[4] = pontos
+                        else:
+                            print("troxa")
+                            
+                        output = open("ranking.pkl",'wb')
+
+                        pickle.dump(jog, output)
+                        pickle.dump(pon, output)
+
+                        output.close()
+
+                            
+                        frame_jogo_left.destroy()
+                        frame_jogo_right.destroy()
+                        titulo_frame.destroy()
+
+                        frame_congra = Frame(root, style='Plac.TFrame')
+                        frame_congra.place(height=600, width=800, x=0, y=0)
+                        frame_congra.config()
+
+                        image_cong = PhotoImage(file="Imagens\\congratulations.png")
+
+                        lp = Label(frame_congra, image=image_cong)
+                        lp.image = image_cong
+                        lp.pack(side="top")
+                        lp = Label(frame_congra, text=("Pontuação: " + pontos), font=("", 30))
+                        lp.pack(pady=50)
+
+                        def voltar():
+                            root.destroy()
+                            newroot = Tk()
+                            newroot.geometry("800x600+50+50")
+                            App(newroot)
+                            newroot.mainloop()
+
+                        voltar = Button(frame_congra, text="Voltar", style='MenuButtons.TButton',
+                                        command=voltar)
+                        voltar.pack()
+
+                frame1 = Frame(frame_jogo_right)
+                frame1.place(height=380, width=75, x=0)
+                frame1.config()
+                frame2 = Frame(frame_jogo_right)
+                frame2.place(height=380, width=75, x=80)
+                frame2.config()
+                frame3 = Frame(frame_jogo_right)
+                frame3.place(height=380, width=75, x=160)
+                frame3.config()
+                frame4 = Frame(frame_jogo_right)
+                frame4.place(height=380, width=75, x=240)
+                frame4.config()
+
+                x = 1
+                for i in range(26):
+                    if x == 1:
+                        array_buttons.append(Button(frame1, text=array_letras[i], style='words.TButton',
+                                                    command=lambda name=i: jogar_letra(array_letras[name])))
+                        array_buttons[i].pack(pady=10)
+                    elif x == 2:
+                        array_buttons.append(Button(frame2, text=array_letras[i], style='words.TButton',
+                                                    command=lambda name=i: jogar_letra(array_letras[name])))
+                        array_buttons[i].pack(pady=10)
+                    elif x == 3:
+                        array_buttons.append(Button(frame3, text=array_letras[i], style='words.TButton',
+                                                    command=lambda name=i: jogar_letra(array_letras[name])))
+                        array_buttons[i].pack(pady=10)
+                    elif x == 4:
+                        array_buttons.append(Button(frame4, text=array_letras[i], style='words.TButton',
+                                                    command=lambda name=i: jogar_letra(array_letras[name])))
+                        array_buttons[i].pack(pady=10)
+                        x = 0
+                    x += 1
+
+
+
 
         
         def novojogo():
@@ -101,8 +391,22 @@ class App:
             lbl_nome_jogador = Label(frame_iniciar_jogo, text="Nome do Jogador: ", style='D.TLabel')
             lbl_nome_jogador.pack(pady=20)
 
+            nome = StringVar()
+            nome.trace("w", lambda name, index, mode, nome=nome: callback(nome))
+            nome_jogador = Entry(frame_iniciar_jogo, style='D.TEntry', font=("", 15), width=30,
+                                 textvariable=nome)
+            nome_jogador.pack()
+            lbl_dificuldade = Label(frame_iniciar_jogo, text="Dificuldade: ", style='D.TLabel')
+            lbl_dificuldade.pack(pady=20)
+
+            lista = StringVar(frame_iniciar_jogo)
+            lista.set("Fácil")
+            dificuldade = OptionMenu(frame_iniciar_jogo, lista, "Fácil", "Fácil", "Médio", "Difícil", style='D.TLabel')
+            dificuldade.pack()
+
+
             def iniciar():
-                difi = lista.get()
+##                difi = lista.get()
                 nome2 = nome_jogador.get()
                 frame_iniciar_jogo.destroy()
 
@@ -139,6 +443,8 @@ class App:
                 palavra_auxiliar = list(palavra)
                 print(palavra_auxiliar)
                 erros = 0
+                ativadas = []
+                
                 output = open("save.pkl",'wb')
 
                 pickle.dump(difi, output)
@@ -148,6 +454,7 @@ class App:
                 pickle.dump(erros, output)
                 pickle.dump(palavra, output)
                 pickle.dump(palavra_auxiliar, output)
+                pickle.dump(ativadas, output)
 
                 output.close()
 
@@ -175,13 +482,31 @@ class App:
 
                 array_forcas[0].pack()
 
+
+                
+
+                def callback(nome):
+                    if nome.get() != "":
+                        iniciar.state(["!disabled"])
+                    else:
+                        iniciar.state(["disabled"])
+
+                nome = StringVar()
+                nome.trace("w", lambda name, index, mode, nome=nome: callback(nome))
+                nome_jogador = Entry(frame_iniciar_jogo, style='D.TEntry', font=("", 15), width=30,
+                                     textvariable=nome)
+                nome_jogador.pack()
+                lbl_dificuldade = Label(frame_iniciar_jogo, text="Dificuldade: ", style='D.TLabel')
+                lbl_dificuldade.pack(pady=20)
+
+                lista = StringVar(frame_iniciar_jogo)
+                lista.set("Fácil")
+                dificuldade = OptionMenu(frame_iniciar_jogo, lista, "Fácil", "Fácil", "Médio", "Difícil", style='D.TLabel')
+                dificuldade.pack()
+
                 
 
                 def jogar_letra(letra):
-                    index = array_letras.index(letra)
-                    array_buttons[index].state(["disabled"])
-
-
                     inputFile = open("save.pkl", 'rb')
                         
                     difi = pickle.load(inputFile)
@@ -191,9 +516,15 @@ class App:
                     erros = pickle.load(inputFile)
                     palavra = pickle.load(inputFile)
                     palavra_auxiliar = pickle.load(inputFile)
+                    ativadas = pickle.load(inputFile)
                         
                     inputFile.close()
                     palavra_auxiliar = list(palavra_auxiliar)
+                    ativadas = list(ativadas)
+                    ativadas.append(letra)
+
+                    index = array_letras.index(letra)
+                    array_buttons[index].state(["disabled"])
                     
                     if palavra.count(letra) == 0:
                         
@@ -298,6 +629,7 @@ class App:
                         pickle.dump(palavra, output)
                         pickle.dump(palavra_auxiliar, output)
                         
+                        
                         output.close()
                     else:
                         inputFile = open("save.pkl", 'rb')
@@ -332,6 +664,8 @@ class App:
                         pickle.dump(erros, output)
                         pickle.dump(palavra, output)
                         pickle.dump(palavra_auxiliar, output)
+                        pickle.dump(palavra_auxiliar, output)
+                        
 
                         output.close()
 
@@ -463,19 +797,7 @@ class App:
                 else:
                     iniciar.state(["disabled"])
 
-            nome = StringVar()
-            nome.trace("w", lambda name, index, mode, nome=nome: callback(nome))
-            nome_jogador = Entry(frame_iniciar_jogo, style='D.TEntry', font=("", 15), width=30,
-                                 textvariable=nome)
-            nome_jogador.pack()
-            lbl_dificuldade = Label(frame_iniciar_jogo, text="Dificuldade: ", style='D.TLabel')
-            lbl_dificuldade.pack(pady=20)
-
-            lista = StringVar(frame_iniciar_jogo)
-            lista.set("Fácil")
-            dificuldade = OptionMenu(frame_iniciar_jogo, lista, "Fácil", "Fácil", "Médio", "Difícil", style='D.TLabel')
-            dificuldade.pack()
-
+            
             def voltar():
                 root.destroy()
                 newroot = Tk()
