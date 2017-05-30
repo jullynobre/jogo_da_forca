@@ -1,0 +1,27 @@
+abrir menu inicial do jogo
+	novo jogo
+		menu de configuração de novo jogo
+			nome do jogar
+			dificuldade	
+	continuar jogo
+		menu de seleção de jogo
+	placares
+		placar com nome dos jogadores e pontuação
+		
+
+tela do jogo em si
+	barra de opções
+		salvar
+		reiniciar jogo
+		retornar ao menu incial
+		fechar o jogo
+	plano grande superior direito 
+		pontuação
+		letras tentadas
+		pedir dica
+		dica
+	plano grande superior esquerdo
+		forca e boneco
+		tentativas restantes
+	plano plano pequeno inferior
+		caixa de entrada de letras

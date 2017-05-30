@@ -56,7 +56,6 @@ class App:
             inputFile.close()
             palavra_auxiliar = list(palavra_auxiliar)
             ativadas = list(ativadas)
-            
             print(palavra)
 
 
@@ -95,42 +94,10 @@ class App:
             array_forcas[erros].pack()
 
 
-            frame1 = Frame(frame_jogo_right)
-            frame1.place(height=380, width=75, x=0)
-            frame1.config()
-            frame2 = Frame(frame_jogo_right)
-            frame2.place(height=380, width=75, x=80)
-            frame2.config()
-            frame3 = Frame(frame_jogo_right)
-            frame3.place(height=380, width=75, x=160)
-            frame3.config()
-            frame4 = Frame(frame_jogo_right)
-            frame4.place(height=380, width=75, x=240)
-            frame4.config()
-
-            x = 1
-            for i in range(26):
-                if x == 1:
-                    array_buttons.append(Button(frame1, text=array_letras[i], style='words.TButton',
-                                                command=lambda name=i: jogar_letra(array_letras[name])))
-                    array_buttons[i].pack(pady=10)
-                elif x == 2:
-                    array_buttons.append(Button(frame2, text=array_letras[i], style='words.TButton',
-                                                command=lambda name=i: jogar_letra(array_letras[name])))
-                    array_buttons[i].pack(pady=10)
-                elif x == 3:
-                    array_buttons.append(Button(frame3, text=array_letras[i], style='words.TButton',
-                                                command=lambda name=i: jogar_letra(array_letras[name])))
-                    array_buttons[i].pack(pady=10)
-                elif x == 4:
-                    array_buttons.append(Button(frame4, text=array_letras[i], style='words.TButton',
-                                                command=lambda name=i: jogar_letra(array_letras[name])))
-                    array_buttons[i].pack(pady=10)
-                    x = 0
-                x += 1
-
-
             def jogar_letra(letra):
+                index = array_letras.index(letra)
+                array_buttons[index].state(["disabled"])
+
 
                 inputFile = open("save.pkl", 'rb')
                         
@@ -146,84 +113,6 @@ class App:
                 inputFile.close()
                 ativadas = list(ativadas)
                 palavra_auxiliar = list(palavra_auxiliar)
-                print(ativadas)
-
-                frame1 = Frame(frame_jogo_right)
-                frame1.place(height=380, width=75, x=0)
-                frame1.config()
-                frame2 = Frame(frame_jogo_right)
-                frame2.place(height=380, width=75, x=80)
-                frame2.config()
-                frame3 = Frame(frame_jogo_right)
-                frame3.place(height=380, width=75, x=160)
-                frame3.config()
-                frame4 = Frame(frame_jogo_right)
-                frame4.place(height=380, width=75, x=240)
-                frame4.config()
-
-                x = 1
-                for i in range(26):
-                    if x == 1:
-                        array_buttons.append(Button(frame1, text=array_letras[i], style='words.TButton',
-                                                    command=lambda name=i: jogar_letra(array_letras[name])))
-                        array_buttons[i].pack(pady=10)
-                    elif x == 2:
-                        array_buttons.append(Button(frame2, text=array_letras[i], style='words.TButton',
-                                                    command=lambda name=i: jogar_letra(array_letras[name])))
-                        array_buttons[i].pack(pady=10)
-                    elif x == 3:
-                        array_buttons.append(Button(frame3, text=array_letras[i], style='words.TButton',
-                                                    command=lambda name=i: jogar_letra(array_letras[name])))
-                        array_buttons[i].pack(pady=10)
-                    elif x == 4:
-                        array_buttons.append(Button(frame4, text=array_letras[i], style='words.TButton',
-                                                    command=lambda name=i: jogar_letra(array_letras[name])))
-                        array_buttons[i].pack(pady=10)
-                        x = 0
-                    x += 1
-
-                ativadas.append(letra)
-
-                for i in range(len(ativadas) - 1):
-                    j = ativadas[i + 1]
-                    index = array_letras.index(j)
-                    array_buttons[index].state(["disabled"])
-
-                frame1 = Frame(frame_jogo_right)
-                frame1.place(height=380, width=75, x=0)
-                frame1.config()
-                frame2 = Frame(frame_jogo_right)
-                frame2.place(height=380, width=75, x=80)
-                frame2.config()
-                frame3 = Frame(frame_jogo_right)
-                frame3.place(height=380, width=75, x=160)
-                frame3.config()
-                frame4 = Frame(frame_jogo_right)
-                frame4.place(height=380, width=75, x=240)
-                frame4.config()
-
-                x = 1
-                for i in range(26):
-                    if x == 1:
-                        array_buttons.append(Button(frame1, text=array_letras[i], style='words.TButton',
-                                                    command=lambda name=i: jogar_letra(array_letras[name])))
-                        array_buttons[i].pack(pady=10)
-                    elif x == 2:
-                        array_buttons.append(Button(frame2, text=array_letras[i], style='words.TButton',
-                                                    command=lambda name=i: jogar_letra(array_letras[name])))
-                        array_buttons[i].pack(pady=10)
-                    elif x == 3:
-                        array_buttons.append(Button(frame3, text=array_letras[i], style='words.TButton',
-                                                    command=lambda name=i: jogar_letra(array_letras[name])))
-                        array_buttons[i].pack(pady=10)
-                    elif x == 4:
-                        array_buttons.append(Button(frame4, text=array_letras[i], style='words.TButton',
-                                                    command=lambda name=i: jogar_letra(array_letras[name])))
-                        array_buttons[i].pack(pady=10)
-                        x = 0
-                    x += 1
-                    
-
                     
                 if palavra.count(letra) == 0:
                         
@@ -338,7 +227,6 @@ class App:
                     pontos = pickle.load(inputFile)
                     dPontos = pickle.load(inputFile)
                     erros = pickle.load(inputFile)
-                    palavra = pickle.load(inputFile)
                     palavra_auxiliar = pickle.load(inputFile)
                     ativadas = pickle.load(inputFile)
                         
@@ -456,7 +344,40 @@ class App:
                                         command=voltar)
                         voltar.pack()
 
-                
+                frame1 = Frame(frame_jogo_right)
+                frame1.place(height=380, width=75, x=0)
+                frame1.config()
+                frame2 = Frame(frame_jogo_right)
+                frame2.place(height=380, width=75, x=80)
+                frame2.config()
+                frame3 = Frame(frame_jogo_right)
+                frame3.place(height=380, width=75, x=160)
+                frame3.config()
+                frame4 = Frame(frame_jogo_right)
+                frame4.place(height=380, width=75, x=240)
+                frame4.config()
+
+                x = 1
+                for i in range(26):
+                    if x == 1:
+                        array_buttons.append(Button(frame1, text=array_letras[i], style='words.TButton',
+                                                    command=lambda name=i: jogar_letra(array_letras[name])))
+                        array_buttons[i].pack(pady=10)
+                    elif x == 2:
+                        array_buttons.append(Button(frame2, text=array_letras[i], style='words.TButton',
+                                                    command=lambda name=i: jogar_letra(array_letras[name])))
+                        array_buttons[i].pack(pady=10)
+                    elif x == 3:
+                        array_buttons.append(Button(frame3, text=array_letras[i], style='words.TButton',
+                                                    command=lambda name=i: jogar_letra(array_letras[name])))
+                        array_buttons[i].pack(pady=10)
+                    elif x == 4:
+                        array_buttons.append(Button(frame4, text=array_letras[i], style='words.TButton',
+                                                    command=lambda name=i: jogar_letra(array_letras[name])))
+                        array_buttons[i].pack(pady=10)
+                        x = 0
+                    x += 1
+
 
 
 
@@ -470,8 +391,22 @@ class App:
             lbl_nome_jogador = Label(frame_iniciar_jogo, text="Nome do Jogador: ", style='D.TLabel')
             lbl_nome_jogador.pack(pady=20)
 
+            nome = StringVar()
+            nome.trace("w", lambda name, index, mode, nome=nome: callback(nome))
+            nome_jogador = Entry(frame_iniciar_jogo, style='D.TEntry', font=("", 15), width=30,
+                                 textvariable=nome)
+            nome_jogador.pack()
+            lbl_dificuldade = Label(frame_iniciar_jogo, text="Dificuldade: ", style='D.TLabel')
+            lbl_dificuldade.pack(pady=20)
+
+            lista = StringVar(frame_iniciar_jogo)
+            lista.set("Fácil")
+            dificuldade = OptionMenu(frame_iniciar_jogo, lista, "Fácil", "Fácil", "Médio", "Difícil", style='D.TLabel')
+            dificuldade.pack()
+
+
             def iniciar():
-                difi = lista.get()
+##                difi = lista.get()
                 nome2 = nome_jogador.get()
                 frame_iniciar_jogo.destroy()
 
@@ -503,11 +438,12 @@ class App:
                     dPontos = 100
 
                 palavra = palavra.upper()
+                print(palavra)
                 
                 palavra_auxiliar = list(palavra)
-                print(palavra)
+                print(palavra_auxiliar)
                 erros = 0
-                ativadas=["%"]
+                ativadas = []
                 
                 output = open("save.pkl",'wb')
 
@@ -547,8 +483,30 @@ class App:
                 array_forcas[0].pack()
 
 
+                
+
+                def callback(nome):
+                    if nome.get() != "":
+                        iniciar.state(["!disabled"])
+                    else:
+                        iniciar.state(["disabled"])
+
+                nome = StringVar()
+                nome.trace("w", lambda name, index, mode, nome=nome: callback(nome))
+                nome_jogador = Entry(frame_iniciar_jogo, style='D.TEntry', font=("", 15), width=30,
+                                     textvariable=nome)
+                nome_jogador.pack()
+                lbl_dificuldade = Label(frame_iniciar_jogo, text="Dificuldade: ", style='D.TLabel')
+                lbl_dificuldade.pack(pady=20)
+
+                lista = StringVar(frame_iniciar_jogo)
+                lista.set("Fácil")
+                dificuldade = OptionMenu(frame_iniciar_jogo, lista, "Fácil", "Fácil", "Médio", "Difícil", style='D.TLabel')
+                dificuldade.pack()
+
+                
+
                 def jogar_letra(letra):
-                    
                     inputFile = open("save.pkl", 'rb')
                         
                     difi = pickle.load(inputFile)
@@ -561,21 +519,15 @@ class App:
                     ativadas = pickle.load(inputFile)
                         
                     inputFile.close()
-
+                    palavra_auxiliar = list(palavra_auxiliar)
+                    ativadas = list(ativadas)
                     ativadas.append(letra)
 
-                    ativadas = list(ativadas)
-                    palavra_auxiliar = list(palavra_auxiliar)
-
-                    print(ativadas)
-                        
                     index = array_letras.index(letra)
                     array_buttons[index].state(["disabled"])
-
-                    palavra_auxiliar = list(palavra)
+                    
                     if palavra.count(letra) == 0:
-                        ativadas = list(ativadas)
-                        palavra_auxiliar = list(palavra_auxiliar)
+                        
                         
                         pontos = str(int(pontos) - int(dPontos))
                         if erros < 6:
@@ -676,10 +628,22 @@ class App:
                         pickle.dump(erros, output)
                         pickle.dump(palavra, output)
                         pickle.dump(palavra_auxiliar, output)
-                        pickle.dump(ativadas, output)
+                        
                         
                         output.close()
                     else:
+                        inputFile = open("save.pkl", 'rb')
+                        
+                        difi = pickle.load(inputFile)
+                        nome2 = pickle.load(inputFile)
+                        pontos = pickle.load(inputFile)
+                        dPontos = pickle.load(inputFile)
+                        erros = pickle.load(inputFile)
+                        palavra_auxiliar = pickle.load(inputFile)
+                        
+                        inputFile.close()
+                        palavra_auxiliar = list(palavra_auxiliar)
+
                         while palavra_auxiliar.count(letra) > 0:
                             index = palavra_auxiliar.index(letra)
                             palavra_auxiliar[index] = "-"
@@ -690,9 +654,9 @@ class App:
                             entry_letras[index].insert(0, letra)
                             entry_letras[index].state(["disabled"])
                             completo.append("-")
-                        
-                        output = open("save.pkl", 'wb')
-                        
+                            
+                        output = open("save.pkl",'wb')
+
                         pickle.dump(difi, output)
                         pickle.dump(nome2, output)
                         pickle.dump(pontos, output)
@@ -700,8 +664,9 @@ class App:
                         pickle.dump(erros, output)
                         pickle.dump(palavra, output)
                         pickle.dump(palavra_auxiliar, output)
-                        pickle.dump(ativadas, output)
+                        pickle.dump(palavra_auxiliar, output)
                         
+
                         output.close()
 
 
@@ -713,11 +678,11 @@ class App:
                             
                             inputFile.close()
 
-                            if (int(pontos) - int(pon[4])) > 0:
-                                if (int(pontos) - int(pon[3])) > 0:
-                                    if (int(pontos) - int(pon[2])) > 0:
-                                        if (int(pontos) - int(pon[1])) > 0:
-                                            if (int(pontos) - int(pon[0])) > 0:
+                            if (int(pontos) - pon[4]) > 0:
+                                if (int(pontos) - pon[3]) > 0:
+                                    if (int(pontos) - pon[2]) > 0:
+                                        if (int(pontos) - pon[1]) > 0:
+                                            if (int(pontos) - pon[0]) > 0:
                                                 jog[4] = jog[3]
                                                 pon[4] = pon[3]
                                                 jog[3] = jog[2]
@@ -832,19 +797,7 @@ class App:
                 else:
                     iniciar.state(["disabled"])
 
-            nome = StringVar()
-            nome.trace("w", lambda name, index, mode, nome=nome: callback(nome))
-            nome_jogador = Entry(frame_iniciar_jogo, style='D.TEntry', font=("", 15), width=30,
-                                 textvariable=nome)
-            nome_jogador.pack()
-            lbl_dificuldade = Label(frame_iniciar_jogo, text="Dificuldade: ", style='D.TLabel')
-            lbl_dificuldade.pack(pady=20)
-
-            lista = StringVar(frame_iniciar_jogo)
-            lista.set("Fácil")
-            dificuldade = OptionMenu(frame_iniciar_jogo, lista, "Fácil", "Fácil", "Médio", "Difícil", style='D.TLabel')
-            dificuldade.pack()
-
+            
             def voltar():
                 root.destroy()
                 newroot = Tk()

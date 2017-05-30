@@ -1,44 +1,4 @@
-from tkinter import *
-from tkinter.ttk import *
-import pickle
-import random
-
-
-class App:
-    def __init__(self, root=None):
-        array_letras = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P",
-                        "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
-        array_buttons = []
-        entry_letras = []
-        array_forcas = [1, 2, 3, 4, 5, 6, 7]
-        completo = []
-        erros = 0
-        acertos = 0
-
-        s = Style()
-
-        s.configure('Title.TFrame', background='#00008D')
-        s.configure('Plac.TFrame', background='#FFFFFF')
-        s.configure('Container.TFrame')
-        s.configure('T.TLabel', background="#00008D", foreground="white", font=("", 35))
-        s.configure('GO.TLabel', background="#00008D", foreground="white")
-        s.configure('D.TLabel', foreground="#00008D", font=("", 15))
-        s.configure('D.TEntry', foreground="#00008D")
-        s.configure('MenuButtons.TButton', highlightbackground="#C8C4FF", foreground="#00008D", font=("", 15))
-        s.configure('words.TButton', highlightbackground="#C8C4FF", foreground="#00008D", font=("", 10))
-
-        titulo_frame = Frame(root, style='Title.TFrame')
-        titulo_frame.place(height=100, width=800)
-        titulo_frame.config()
-
-        titulo = Label(titulo_frame, text="JOGO DA FORCA", style='T.TLabel')
-        titulo.pack(pady=20)
-
-        main_frame = Frame(root, style='Container.TFrame')
-        main_frame.place(height=400, width=800, y=160)
-        main_frame.config()
-
-        def novojogo():
+def novojogo():
             main_frame.destroy()
             frame_iniciar_jogo = Frame(root, style='Container.TFrame')
             frame_iniciar_jogo.place(height=400, width=800, y=160)
@@ -60,40 +20,30 @@ class App:
                 frame_jogo_right.place(height=400, width=315, x=435, y=150)
                 frame_jogo_right.config()
 
-                inputFile = open("palavras.pkl", 'rb')
-
-                palavras1 = pickle.load(inputFile)
-                palavras2 = pickle.load(inputFile)
-                palavras3 = pickle.load(inputFile)
-
-                inputFile.close()
-
-
                 palavra = ""
                 #escolha da palavra
+                inputFile = open("palavras.pkl", 'rb')
                 if (difi == "Fácil"):
+                    palavras1 = pickle.load(inputFile)
                     palavra = palavras1[random.randint(0,4)]
                     pontos = 1000
                     dPontos = 20
                 elif (difi == "Médio"):
+                    palavras2 = pickle.load(inputFile)
                     palavra = palavras2[random.randint(0,4)]
                     pontos = 2000
                     dPontos = 50
                 elif (difi == "Difícil"):
+                    palavras3 = pickle.load(inputFile)
                     palavra = palavras3[random.randint(0, 4)]
                     pontos = 3000
                     dPontos = 100
 
-                output = open("palavras.pkl", "wb")
-
-                pickle.dump(palavras1, output)
-                pickle.dump(palavras2, output)
-                pickle.dump(palavras3, output)
-
-                output.close()
-
+                palavra_auxiliar = list(palavra)
                 print(palavra)
                 erros = 0
+                ativadas = []
+                
                 output = open("save.pkl",'wb')
 
                 pickle.dump(difi, output)
@@ -101,6 +51,9 @@ class App:
                 pickle.dump(pontos, output)
                 pickle.dump(dPontos, output)
                 pickle.dump(erros, output)
+                pickle.dump(palavra, output)
+                pickle.dump(palavra_auxiliar, output)
+                pickle.dump(ativadas, output)
 
                 output.close()
 
@@ -115,8 +68,8 @@ class App:
                 frame_tracos.pack(side="bottom")
 
                 for i in range(len(palavra)):
-                    entry_letras.append(Entry(frame_tracos, style='D.TEntry', font=("", 18), width=2))
-                    entry_letras[i].pack(side='left')
+                    entry_letras.append(Entry(frame_tracos, style='D.TEntry', font=("", 20), width=2))
+                    entry_letras[i].pack(side='left', padx=5)
                     entry_letras[i].state(["disabled"])
 
                 i = 1
@@ -261,7 +214,6 @@ class App:
                             entry_letras[index].insert(0, letra)
                             entry_letras[index].state(["disabled"])
                             completo.append("-")
-                        
                         output = open("save.pkl", 'wb')
                         pickle.dump(difi, output)
                         pickle.dump(nome2, output)
@@ -392,129 +344,41 @@ class App:
 
             iniciar = Button(frame_iniciar_jogo, text="Iniciar", style='MenuButtons.TButton', command=iniciar)
 
-            def callback(nome):
-                if nome.get() != "":
-                    iniciar.state(["!disabled"])
-                else:
-                    iniciar.state(["disabled"])
-
-            nome = StringVar()
-            nome.trace("w", lambda name, index, mode, nome=nome: callback(nome))
-            nome_jogador = Entry(frame_iniciar_jogo, style='D.TEntry', font=("", 15), width=30,
-                                 textvariable=nome)
-            nome_jogador.pack()
-            lbl_dificuldade = Label(frame_iniciar_jogo, text="Dificuldade: ", style='D.TLabel')
-            lbl_dificuldade.pack(pady=20)
-
-            lista = StringVar(frame_iniciar_jogo)
-            lista.set("Fácil")
-            dificuldade = OptionMenu(frame_iniciar_jogo, lista, "Fácil", "Fácil", "Médio", "Difícil", style='D.TLabel')
-            dificuldade.pack()
-
-            def voltar():
-                root.destroy()
-                newroot = Tk()
-                newroot.geometry("800x600+50+50")
-                App(newroot)
-                newroot.mainloop()
-
-            iniciar.pack(pady=50)
-            iniciar.state(["disabled"])
-
-            voltar = Button(frame_iniciar_jogo, text="Voltar", style='MenuButtons.TButton', command=voltar)
-            voltar.pack()
-
-        def placar():
-            inputFile = open("ranking.pkl", 'rb')
-                            
-            jog = pickle.load(inputFile)
-            pon = pickle.load(inputFile)
-                            
-            inputFile.close()
 
 
-            
-            
-            main_frame.destroy()
-            frame_placar = Frame(root, style='Plac.TFrame')
-            frame_placar.place(height=600, width=800, y=0)
-            frame_placar.config()
 
-            titulo_frame = Frame(root, style='Title.TFrame')
-            titulo_frame.place(height=100, width=800)
-            titulo_frame.config()
 
-            titulo = Label(titulo_frame, text="JOGO DA FORCA", style='T.TLabel')
-            titulo.pack(pady=20)
 
-            frame_colocacao1 = Frame(frame_placar, style='Plac.TFrame')
-            frame_colocacao1.place(height=160, width=120, x=340, y=160)
-            frame_colocacao1.config()
-            frame_colocacao2 = Frame(frame_placar, style='Plac.TFrame')
-            frame_colocacao2.place(height=160, width=120, x=170, y=220)
-            frame_colocacao2.config()
-            frame_colocacao3 = Frame(frame_placar, style='Plac.TFrame')
-            frame_colocacao3.place(height=160, width=120, x=510, y=220)
-            frame_colocacao3.config()
-            frame_colocacao4 = Frame(frame_placar, style='Plac.TFrame')
-            frame_colocacao4.place(height=160, width=120, x=170, y=400)
-            frame_colocacao4.config()
-            frame_colocacao5 = Frame(frame_placar, style='Plac.TFrame')
-            frame_colocacao5.place(height=160, width=120, x=510, y=400)
-            frame_colocacao5.config()
 
-            image_primeiro = PhotoImage(file="Imagens\\primeiro.png")
-            image_outros = PhotoImage(file="Imagens\\outros.png")
 
-            lp = Label(frame_colocacao1, image=image_primeiro)
-            lp.image = image_primeiro
-            lp.pack(side="top")
-            lp = Label(frame_colocacao2, image=image_outros)
-            lp.image = image_outros
-            lp.pack(side="top")
-            lp = Label(frame_colocacao3, image=image_outros)
-            lp.image = image_outros
-            lp.pack(side="top")
-            lp = Label(frame_colocacao4, image=image_outros)
-            lp.image = image_outros
-            lp.pack(side="top")
-            lp = Label(frame_colocacao5, image=image_outros)
-            lp.image = image_outros
-            lp.pack(side="top")
 
-            lp = Label(frame_colocacao1, text=jog[0], style="Dp.TLabel", font=("", 10))
-            lp.pack(side="bottom")
-            lp = Label(frame_colocacao1, text=pon[0], style="Dp.TLabel", font=("", 10))
-            lp.pack(side="bottom")
-            lp = Label(frame_colocacao2, text=jog[1], style="Dp.TLabel", font=("", 10))
-            lp.pack(side="bottom")
-            lp = Label(frame_colocacao2, text=pon[1], style="Dp.TLabel", font=("", 10))
-            lp.pack(side="bottom")
-            lp = Label(frame_colocacao3, text=jog[2], style="Dp.TLabel", font=("", 10))
-            lp.pack(side="bottom")
-            lp = Label(frame_colocacao3, text=pon[2], style="Dp.TLabel", font=("", 10))
-            lp.pack(side="bottom")
-            lp = Label(frame_colocacao4, text=jog[3], style="Dp.TLabel", font=("", 10))
-            lp.pack(side="bottom")
-            lp = Label(frame_colocacao4, text=pon[3], style="Dp.TLabel", font=("", 10))
-            lp.pack(side="bottom")
-            lp = Label(frame_colocacao5, text=jog[4], style="Dp.TLabel", font=("", 10))
-            lp.pack(side="bottom")
-            lp = Label(frame_colocacao5, text=pon[4], style="Dp.TLabel", font=("", 10))
-            lp.pack(side="bottom")
 
-        novo_jogo = Button(main_frame, text="        Novo Jogo       ", style='MenuButtons.TButton', command=novojogo)
-        novo_jogo.pack(pady=20)
-        continuar_jogo = Button(main_frame, text="     Continuar Jogo    ", style='MenuButtons.TButton')
-        continuar_jogo.pack(pady=20)
-        continuar_jogo.state(['disabled'])
-        placares_jogo = Button(main_frame, text="         Placares         ", style='MenuButtons.TButton', command=placar)
-        placares_jogo.pack(pady=20)
-        gerenciar_palavras = Button(main_frame, text="  Gerenciar Palavras ", style='MenuButtons.TButton')
-        gerenciar_palavras.pack(pady=20)
-        gerenciar_palavras.state(['disabled'])
 
-root = Tk()
-root.geometry("800x600+50+50")
-App(root)
-root.mainloop()
+
+
+
+
+                difi = pickle.load(inputFile)
+                nome2 = pickle.load(inputFile)
+                pontos = pickle.load(inputFile)
+                dPontos = pickle.load(inputFile)
+                erros = pickle.load(inputFile)
+                palavra = pickle.load(inputFile)
+                palavra_auxiliar = pickle.load(inputFile)
+                ativadas = pickle.load(inputFile)
+
+                ativadas = list(ativadas)
+                palavra_auxiliar = list(palavra_auxiliar)
+
+
+
+
+
+                pickle.dump(difi, output)
+                pickle.dump(nome2, output)
+                pickle.dump(pontos, output)
+                pickle.dump(dPontos, output)
+                pickle.dump(erros, output)
+                pickle.dump(palavra, output)
+                pickle.dump(palavra_auxiliar, output)
+                pickle.dump(ativadas, output)
